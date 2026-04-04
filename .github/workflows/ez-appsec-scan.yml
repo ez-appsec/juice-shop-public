@@ -19,7 +19,6 @@ permissions:
 
 env:
   EZ_APPSEC_VERSION: "latest"
-  EZ_APPSEC_IMAGE: "ghcr.io/ez-appsec/ez-appsec:${{ env.EZ_APPSEC_VERSION }}"
   EZ_APPSEC_OUTPUT_DIR: "scan-results"
 
 
@@ -29,11 +28,11 @@ jobs:
     name: Security Scan
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.EZ_APPSEC_IMAGE }}
+      image: ghcr.io/ez-appsec/ez-appsec:latest
       options: --user root
     env:
       EZ_APPSEC_OUTPUT_DIR: "scan-results"
-      EZ_APPSEC_SARIF: "${{ env.EZ_APPSEC_OUTPUT_DIR }}/ez-appsec.sarif"
+      EZ_APPSEC_SARIF: "scan-results/ez-appsec.sarif"
     outputs:
       findings-count: ${{ steps.summary.outputs.findings-count }}
 
@@ -152,12 +151,12 @@ jobs:
     name: Cold Security Scan (Manual)
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.EZ_APPSEC_IMAGE }}
+      image: ghcr.io/ez-appsec/ez-appsec:latest
       options: --user root
     if: github.event_name == 'workflow_dispatch'
     env:
       EZ_APPSEC_OUTPUT_DIR: "scan-results"
-      EZ_APPSEC_SARIF: "${{ env.EZ_APPSEC_OUTPUT_DIR }}/ez-appsec.sarif"
+      EZ_APPSEC_SARIF: "scan-results/ez-appsec.sarif"
     outputs:
       findings-count: ${{ steps.summary.outputs.findings-count }}
 

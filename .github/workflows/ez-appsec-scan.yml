@@ -29,10 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/ez-appsec/ez-appsec:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GHCR_READ_TOKEN }}
-      options: --entrypoint ""
+      options: --user root --entrypoint ""
     outputs:
       findings-count: ${{ steps.summary.outputs.findings-count }}
 

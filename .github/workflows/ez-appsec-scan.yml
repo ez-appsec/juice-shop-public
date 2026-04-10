@@ -223,10 +223,16 @@ jobs:
           git clone "https://x-access-token:${DASHBOARD_PUSH_TOKEN}@github.com/${EZ_APPSEC_DASHBOARD_REPO}.git" "${DASH_DIR}/dashboard"
           mkdir -p "${DASH_DIR}/dashboard/data/$(dirname ${VULN_REL})"
           cp /tmp/vulns-with-meta.json "${DASH_DIR}/dashboard/data/${VULN_REL}"
+
+          # Regenerate index.json by fetching and running the aggregation script
+          curl -sSfL "https://raw.githubusercontent.com/ez-appsec/ez-appsec/main/github/dashboard/aggregate-index.py" \
+            -o /tmp/aggregate-index.py
+          python3 /tmp/aggregate-index.py "${DASH_DIR}/dashboard/data"
+
           cd "${DASH_DIR}/dashboard"
           git config user.name "ez-appsec scan"
           git config user.email "ci@ez-appsec.ai"
-          git add data/vulnerabilities/
+          git add data/
           git diff --staged --quiet && echo "No changes." || \
             git commit -m "chore: update scan results for ${{ github.repository }}"
           git push origin main

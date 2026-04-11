@@ -57,13 +57,14 @@ jobs:
     steps:
       - name: Mint App token for dashboard push
         id: token
-        if: ${{ vars.EZ_APPSEC_DASHBOARD_REPO != '' && secrets.EZ_APPSEC_APP_ID != '' }}
+        if: ${{ vars.EZ_APPSEC_DASHBOARD_REPO != '' }}
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.EZ_APPSEC_APP_ID }}
           private-key: ${{ secrets.EZ_APPSEC_PRIVATE_KEY }}
           owner: ez-appsec
           repositories: ez-appsec-dashboard
+        continue-on-error: true
 
   # Job 2: run the full security scan and push results to the dashboard.
   scan:

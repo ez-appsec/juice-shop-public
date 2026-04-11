@@ -4,3 +4,4 @@
 # Trigger scan
 # Trigger scan with valid YAML
 # Trigger scan with dashboard var set
+# Trigger scan with secrets set

@@ -5,3 +5,4 @@
 # Trigger scan with valid YAML
 # Trigger scan with dashboard var set
 # Trigger scan with secrets set
+# Trigger scan with fixed private key
